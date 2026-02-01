@@ -104,6 +104,21 @@ python main.py
 pytest tests/ -v
 ```
 
+### Run the Web UI (Optional)
+
+For the visual demo shown above, run the frontend in a separate terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Then open **http://localhost:3000** in your browser.
+
+> [!NOTE]
+> The frontend requires the backend server (`python main.py`) to be running on port 8000.
+
 ### Try It Now
 
 Once the server is running, test the multi-agent judgment system:
