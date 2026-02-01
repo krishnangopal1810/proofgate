@@ -1,31 +1,31 @@
-# PRD: ProofGate — Multi-Agent Judgment System for Financial Compliance (Hackathon Winner Build)
+# PRD: ProofGate — Multi-Agent Judgment System for Financial Compliance
 
 **Owner:** Krishnan  
-**Audience:** Coding agent(s) implementing MVP end-to-end  
-**Timebox:** Hackathon (1–2 engineers)  
-**Demo constraint:** A single coherent end-to-end workflow that can be run live in **< 90 seconds**
+**Audience:** Engineering team  
+**Scope:** MVP for initial deployment  
+**Demo constraint:** A single coherent end-to-end workflow that runs in **< 90 seconds**
 
 ---
 
-## 0) What we are optimizing for (maps 1:1 to judging criteria)
+## 0) Design Principles
 
-This PRD is explicitly engineered to maximize:
+This product is built around five core principles:
 
-1) **Clarity of idea**  
+1) **Clarity**  
    - One sentence: “Ask if you can book revenue now; ProofGate either approves, rejects, or refuses due to missing evidence—always with citations.”
 
-2) **Track alignment (multi-agent necessity)**  
+2) **Multi-agent architecture**  
    - Multi-agent is essential because the decision requires **conflicting objectives**:
      - permissive policy interpretation vs conservative risk vs strict evidence sufficiency
    - Judge resolves conflict via **deterministic rules** (not vibes)
 
-3) **Technical execution**  
+3) **Technical rigor**  
    - Strict JSON schemas, citation whitelist enforcement, replayable trace, golden tests
 
-4) **Completeness (E2E workflow)**  
+4) **End-to-end completeness**  
    - A single screen app with doc pack → question → retrieval → agent debate → final JSON verdict → attach evidence → rerun flip
 
-5) **Impact & insight**  
+5) **Real-world impact**  
    - High-stakes “fail-closed gate” that prevents unsafe financial actions  
    - Insight: The product is a governed decision workflow, not “RAG Q&A”
 
@@ -83,7 +83,7 @@ Revenue accounting / finance controller / deal desk reviewer.
 6) Rerun flips verdict (or materially updates confidence/conditions)
 7) Trace log shows run hash + replayability
 
-**Definition of success:** A judge watching the demo can retell it in one sentence.
+**Success criteria:** The workflow can be demonstrated and understood in < 90 seconds.
 
 ---
 
@@ -375,11 +375,11 @@ The novelty is a decision workflow:
 	•	refusal + conditions to allow
 	•	reproducibility via trace
 
-Success metric in demo: Judges immediately say: “It refuses without proof.”
+Success metric: Users immediately understand: "It refuses without proof."
 
 ⸻
 
-## 13) Definition of Done (Winning bar)
+## 13) Definition of Done
 
 We are done when:
 	•	One command runs the app
