@@ -36,6 +36,9 @@
   <em>Toggle OFF → REJECT (missing acceptance) → Toggle ON → APPROVE (evidence complete)</em>
 </p>
 
+> [!TIP]
+> **About the Toggle:** The "Include acceptance email" toggle simulates adding or removing a critical piece of evidence. This demonstrates how ProofGate's multi-agent system responds to changes in the evidence set—the same question yields different verdicts based on what documents are available.
+
 **The "Aha" Moment:** Same question, same documents—but toggle the acceptance email evidence and watch the verdict flip from **REJECT** to **APPROVE**. That's multi-agent verification in action.
 
 ---
