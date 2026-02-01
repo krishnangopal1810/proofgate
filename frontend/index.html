@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofGate | The AI That Says No Until You Prove It</title>
+    <meta name="description"
+        content="A fail-closed multi-agent judgment layer for financial compliance decisions. Built with OpenAI Agents SDK.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                    <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span class="logo-text">ProofGate</span>
+            </div>
+            <p class="tagline">The AI that says "No" until you prove it</p>
+            <a href="https://github.com/krishnangopal1810/proofgate" target="_blank" class="github-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Question Input Card -->
+        <section class="question-section">
+            <div class="glass-card question-card">
+                <h2 class="card-title">
+                    <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                    </svg>
+                    Ask ProofGate
+                </h2>
+                <div class="input-group">
+                    <textarea id="questionInput" class="question-input" placeholder="Enter your compliance question..."
+                        rows="2">Can we recognize ₹12Cr revenue this quarter for Customer K?</textarea>
+                </div>
+                <div class="toggle-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="acceptanceToggle" class="toggle-checkbox">
+                        <span class="toggle-switch"></span>
+                        <span class="toggle-text">Include acceptance email in evidence</span>
+                    </label>
+                    <span class="toggle-hint">(Toggle to see verdict flip!)</span>
+                </div>
+                <button id="judgeButton" class="primary-button">
+                    <svg class="button-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <span class="button-text">Run Judgment</span>
+                    <span class="button-spinner"></span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Knowledge Base Panel -->
+        <section class="knowledge-section">
+            <details class="glass-card knowledge-panel" id="knowledgePanel">
+                <summary class="knowledge-header">
+                    <svg class="knowledge-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m16 6 4 14" />
+                        <path d="M12 6v14" />
+                        <path d="M8 8v12" />
+                        <path d="M4 4v16" />
+                    </svg>
+                    <span class="knowledge-title">Knowledge Base</span>
+                    <span class="knowledge-count" id="documentCount">Loading...</span>
+                    <svg class="knowledge-toggle" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
+                </summary>
+                <div class="knowledge-content" id="knowledgeContent">
+                    <p class="knowledge-loading">Loading documents...</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Agent Pipeline Visualization -->
+        <section class="pipeline-section" id="pipelineSection">
+            <h2 class="section-title">Multi-Agent Pipeline</h2>
+
+            <!-- Agent Cards Row -->
+            <div class="agents-row">
+                <!-- Policy Agent -->
+                <div class="glass-card agent-card agent-policy" id="policyAgent">
+                    <div class="agent-header">
+                        <svg class="agent-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                            <path d="M10 9H8" />
+                            <path d="M16 13H8" />
+                            <path d="M16 17H8" />
+                        </svg>
+                        <span class="agent-name">Policy Agent</span>
+                    </div>
+                    <div class="agent-status">
+                        <svg class="status-icon status-waiting" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        <svg class="status-icon status-complete" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <path d="m9 11 3 3L22 4" />
+                        </svg>
+                        <span class="status-text">Waiting...</span>
+                    </div>
+                    <div class="agent-stance" data-stance="">
+                        <span class="stance-label">Stance:</span>
+                        <span class="stance-value">—</span>
+                    </div>
+                    <div class="agent-details">
+                        <div class="agent-conditions"></div>
+                        <div class="agent-citations"></div>
+                    </div>
+                    <button class="expand-button">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                        Show Rationale
+                    </button>
+                    <div class="agent-rationale"></div>
+                </div>
+
+                <!-- Risk Agent -->
+                <div class="glass-card agent-card agent-risk" id="riskAgent">
+                    <div class="agent-header">
+                        <svg class="agent-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                            <path d="M12 9v4" />
+                            <path d="M12 17h.01" />
+                        </svg>
+                        <span class="agent-name">Risk Agent</span>
+                    </div>
+                    <div class="agent-status">
+                        <svg class="status-icon status-waiting" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        <svg class="status-icon status-complete" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <path d="m9 11 3 3L22 4" />
+                        </svg>
+                        <span class="status-text">Waiting...</span>
+                    </div>
+                    <div class="agent-stance" data-stance="">
+                        <span class="stance-label">Stance:</span>
+                        <span class="stance-value">—</span>
+                    </div>
+                    <div class="agent-details">
+                        <div class="agent-conditions"></div>
+                        <div class="agent-citations"></div>
+                    </div>
+                    <button class="expand-button">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                        Show Rationale
+                    </button>
+                    <div class="agent-rationale"></div>
+                </div>
+
+                <!-- Evidence Agent -->
+                <div class="glass-card agent-card agent-evidence" id="evidenceAgent">
+                    <div class="agent-header">
+                        <svg class="agent-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                            <circle cx="11.5" cy="14.5" r="2.5" />
+                            <path d="M13.3 16.3 15 18" />
+                        </svg>
+                        <span class="agent-name">Evidence Agent</span>
+                    </div>
+                    <div class="agent-status">
+                        <svg class="status-icon status-waiting" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        <svg class="status-icon status-complete" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <path d="m9 11 3 3L22 4" />
+                        </svg>
+                        <span class="status-text">Waiting...</span>
+                    </div>
+                    <div class="agent-stance" data-stance="">
+                        <span class="stance-label">Stance:</span>
+                        <span class="stance-value">—</span>
+                    </div>
+                    <div class="agent-details">
+                        <div class="agent-conditions"></div>
+                        <div class="agent-citations"></div>
+                    </div>
+                    <button class="expand-button">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                        Show Rationale
+                    </button>
+                    <div class="agent-rationale"></div>
+                </div>
+            </div>
+
+            <!-- Flow Arrow -->
+            <div class="flow-arrow" id="flowArrow">
+                <svg viewBox="0 0 24 60" class="arrow-svg">
+                    <path d="M12 0 L12 50 M6 44 L12 50 L18 44" stroke="currentColor" stroke-width="2" fill="none" />
+                </svg>
+            </div>
+
+            <!-- Judge Card -->
+            <div class="glass-card judge-card" id="judgeCard">
+                <div class="judge-header">
+                    <svg class="judge-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 17 2 2 4-4" />
+                        <path d="m3 7 2 2 4-4" />
+                        <path d="M13 6h8" />
+                        <path d="M13 12h8" />
+                        <path d="M13 18h8" />
+                    </svg>
+                    <span class="judge-name">Judge</span>
+                </div>
+                <div class="judge-status">
+                    <svg class="status-icon status-waiting" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                    </svg>
+                    <span class="status-text">Waiting for agents...</span>
+                </div>
+                <div class="rule-applied" id="ruleApplied"></div>
+                <div class="verdict-container" id="verdictContainer">
+                    <div class="verdict-badge" id="verdictBadge">
+                        <span class="verdict-text">—</span>
+                        <span class="verdict-glow"></span>
+                    </div>
+                </div>
+                <div class="violations-list" id="violationsList"></div>
+                <div class="conditions-list" id="conditionsList"></div>
+            </div>
+        </section>
+
+        <!-- Collapsible Panels -->
+        <section class="panels-section">
+            <!-- Evidence Panel -->
+            <details class="glass-card panel evidence-panel" id="evidencePanel">
+                <summary class="panel-header">
+                    <svg class="panel-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m16 6 4 14" />
+                        <path d="M12 6v14" />
+                        <path d="M8 8v12" />
+                        <path d="M4 4v16" />
+                    </svg>
+                    <span class="panel-title">Evidence Context</span>
+                    <svg class="panel-toggle" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
+                </summary>
+                <div class="panel-content" id="evidenceContent">
+                    <p class="panel-placeholder">Run judgment to see evidence excerpts...</p>
+                </div>
+            </details>
+
+            <!-- Trace Panel -->
+            <details class="glass-card panel trace-panel" id="tracePanel">
+                <summary class="panel-header">
+                    <svg class="panel-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                    </svg>
+                    <span class="panel-title">Audit Trace</span>
+                    <svg class="panel-toggle" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
+                </summary>
+                <div class="panel-content" id="traceContent">
+                    <p class="panel-placeholder">Run judgment to see trace data...</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <!-- Evidence Sidebar - Slides in from right -->
+    <aside class="evidence-sidebar" id="evidenceSidebar">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                </svg>
+                Evidence Documents
+            </h3>
+            <button class="sidebar-close" id="sidebarClose">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="sidebar-content" id="sidebarContent">
+            <p class="sidebar-placeholder">Click a citation to see the source document.</p>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Citation Tooltip -->
+    <div class="citation-tooltip" id="citationTooltip">
+        <div class="tooltip-header">
+            <span class="tooltip-id"></span>
+            <span class="tooltip-type"></span>
+        </div>
+        <div class="tooltip-content"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with <a href="https://github.com/openai/openai-agents-python" target="_blank">OpenAI Agents SDK</a> •
+            <a href="https://github.com/krishnangopal1810/proofgate" target="_blank">GitHub</a> • MIT License
+        </p>
+    </footer>
+
+    <!-- Vite entry point -->
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

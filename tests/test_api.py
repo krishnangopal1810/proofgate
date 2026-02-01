@@ -163,3 +163,129 @@ class TestAttachEvidenceEndpoint:
         assert data["status"] == "success"
         assert "test.md" in data["message"]
         assert data["size_bytes"] > 0
+
+
+class TestTracesEndpoint:
+    """Tests for the traces listing and retrieval endpoints."""
+    
+    @pytest.mark.asyncio
+    async def test_list_traces_returns_structure(self):
+        """Test that list traces returns expected structure."""
+        async with AsyncClient(
+            transport=ASGITransport(app=app),
+            base_url="http://test"
+        ) as client:
+            response = await client.get("/api/traces")
+        
+        assert response.status_code == 200
+        data = response.json()
+        assert "traces" in data
+        assert "count" in data
+        assert isinstance(data["traces"], list)
+    
+    @pytest.mark.asyncio
+    async def test_get_trace_not_found(self):
+        """Test that getting a non-existent trace returns 404."""
+        async with AsyncClient(
+            transport=ASGITransport(app=app),
+            base_url="http://test"
+        ) as client:
+            response = await client.get("/api/traces/nonexistent-run-id")
+        
+        assert response.status_code == 404
+
+
+class TestJudgeEndpointValidation:
+    """Tests for judge endpoint input validation."""
+    
+    @pytest.mark.asyncio
+    async def test_judge_missing_question_fails(self):
+        """Test that missing question field returns validation error."""
+        async with AsyncClient(
+            transport=ASGITransport(app=app),
+            base_url="http://test"
+        ) as client:
+            response = await client.post(
+                "/api/judge",
+                json={"include_acceptance_email": True}  # Missing question
+            )
+        
+        assert response.status_code == 422
+    
+    @pytest.mark.asyncio
+    async def test_judge_empty_question_allowed(self):
+        """Test behavior with empty question string."""
+        mock_verdict = FinalVerdict(
+            verdict="INSUFFICIENT_EVIDENCE",
+            confidence=0.0,
+            violations=[],
+            conditions_to_allow=[],
+            citations=[],
+            rule_applied="TEST"
+        )
+        
+        mock_result = {
+            'run_id': 'test',
+            'verdict': mock_verdict.model_dump(),
+            'agent_outputs': {},
+            'trace': {
+                'run_id': 'test',
+                'input_hash': 'hash',
+                'question': '',
+                'excerpt_ids': [],
+                'prompt_versions': {},
+                'replayed': False,
+            },
+            'excerpts_used': [],
+        }
+        
+        with patch('src.api.main._get_orchestrator') as mock_get_orch:
+            mock_orchestrator = MagicMock()
+            mock_orchestrator.run = AsyncMock(return_value=mock_result)
+            mock_get_orch.return_value = mock_orchestrator
+            
+            async with AsyncClient(
+                transport=ASGITransport(app=app),
+                base_url="http://test"
+            ) as client:
+                response = await client.post(
+                    "/api/judge",
+                    json={"question": ""}  # Empty but present
+                )
+            
+            # Should not raise validation error
+            assert response.status_code in [200, 500]
+
+
+class TestRetrieverBehavior:
+    """Tests for retriever acceptance email filtering."""
+    
+    @pytest.mark.asyncio
+    async def test_excerpts_without_acceptance(self):
+        """Test that EVI-003 is excluded by default."""
+        async with AsyncClient(
+            transport=ASGITransport(app=app),
+            base_url="http://test"
+        ) as client:
+            response = await client.get("/api/excerpts?include_acceptance=false")
+        
+        assert response.status_code == 200
+        data = response.json()
+        
+        evidence_ids = [e["excerpt_id"] for e in data["excerpts"]["evidence"]]
+        assert "EVI-003" not in evidence_ids
+    
+    @pytest.mark.asyncio
+    async def test_excerpts_with_acceptance(self):
+        """Test that EVI-003 is included when requested."""
+        async with AsyncClient(
+            transport=ASGITransport(app=app),
+            base_url="http://test"
+        ) as client:
+            response = await client.get("/api/excerpts?include_acceptance=true")
+        
+        assert response.status_code == 200
+        data = response.json()
+        
+        evidence_ids = [e["excerpt_id"] for e in data["excerpts"]["evidence"]]
+        assert "EVI-003" in evidence_ids

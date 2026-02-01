@@ -1,0 +1,338 @@
+/* ProofGate Premium Animations */
+
+/* ============================================
+   KEYFRAMES - Physics-based, organic
+   ============================================ */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+}
+
+@keyframes flowPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(4px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Verdict Animations - Dramatic reveal */
+@keyframes verdictApprove {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+        box-shadow: 0 0 0 rgba(var(--verdict-approve-rgb), 0);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: var(--shadow-glow-approve);
+    }
+}
+
+@keyframes verdictReject {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-2deg);
+        box-shadow: 0 0 0 rgba(var(--verdict-reject-rgb), 0);
+    }
+
+    30% {
+        transform: scale(1.08) rotate(1deg);
+    }
+
+    50% {
+        transform: scale(1.02) rotate(-0.5deg);
+    }
+
+    70% {
+        transform: scale(1.04) rotate(0.3deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+        box-shadow: var(--shadow-glow-reject);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes glowBreath {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        filter: blur(20px);
+    }
+
+    50% {
+        opacity: 0.8;
+        filter: blur(30px);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* Screen shake for dramatic effect */
+@keyframes screenShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10% {
+        transform: translateX(-3px);
+    }
+
+    20% {
+        transform: translateX(3px);
+    }
+
+    30% {
+        transform: translateX(-2px);
+    }
+
+    40% {
+        transform: translateX(2px);
+    }
+
+    50% {
+        transform: translateX(-1px);
+    }
+
+    60% {
+        transform: translateX(1px);
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.animate-fade-in {
+    animation: fadeIn var(--duration-normal) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn var(--duration-slow) var(--ease-out-back) forwards;
+}
+
+.animate-slide-in-up {
+    animation: slideInUp var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Staggered delays */
+.delay-75 {
+    animation-delay: 75ms;
+}
+
+.delay-100 {
+    animation-delay: 100ms;
+}
+
+.delay-150 {
+    animation-delay: 150ms;
+}
+
+.delay-200 {
+    animation-delay: 200ms;
+}
+
+.delay-300 {
+    animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
+}
+
+.delay-500 {
+    animation-delay: 500ms;
+}
+
+.delay-600 {
+    animation-delay: 600ms;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--bg-secondary) 0%,
+            var(--bg-highlight) 50%,
+            var(--bg-secondary) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+/* Focus mode overlay */
+.focus-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-slow) var(--ease-out-expo);
+    z-index: 50;
+}
+
+.focus-overlay.active {
+    opacity: 1;
+}
+
+/* ============================================
+   HOVER EFFECTS
+   ============================================ */
+.hover-lift {
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.hover-lift:hover {
+    transform: translateY(-3px);
+}
+
+.hover-scale {
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+.hover-glow {
+    transition: box-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+.hover-glow:hover {
+    box-shadow: var(--shadow-glow-cyan);
+}
+
+/* ============================================
+   SCREEN EFFECTS
+   ============================================ */
+body.verdict-shake {
+    animation: screenShake 0.5s ease-out;
+}
+
+/* Ambient glow behind elements */
+.ambient-glow {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, currentColor 0%, transparent 70%);
+    opacity: 0.15;
+    pointer-events: none;
+    animation: glowBreath 3s ease-in-out infinite;
+}

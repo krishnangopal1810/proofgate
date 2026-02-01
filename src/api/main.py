@@ -93,7 +93,9 @@ def _get_retriever(include_acceptance: bool = False) -> SimpleRetriever:
             if e.excerpt_id != 'EVI-003'  # Acceptance email
         ]
     
-    return SimpleRetriever(excerpts_by_type)
+    # When acceptance email is included, increase evidence limit to include all 3
+    evidence_limit = 3 if include_acceptance else 2
+    return SimpleRetriever(excerpts_by_type, evidence_limit=evidence_limit)
 
 
 @asynccontextmanager
