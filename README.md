@@ -41,6 +41,14 @@
 
 **The "Aha" Moment:** Same question, same documents—but toggle the acceptance email evidence and watch the verdict flip from **REJECT** to **APPROVE**. That's multi-agent verification in action.
 
+> [!IMPORTANT]
+> ### 🎯 TL;DR for Judges
+> - **Problem:** Single-agent LLMs say "yes" too easily in high-stakes decisions
+> - **Solution:** 4 specialized agents with *conflicting objectives* (advocate vs adversary vs auditor)
+> - **Key Innovation:** Deterministic Judge resolves conflicts with priority rules, not voting
+> - **Demo:** Toggle evidence → watch verdict flip → that's the "aha" moment above
+> - **Track Fit:** Purposeful coordination (debate → verification → consensus), not parallel execution
+
 ---
 
 ## ⚡ Quick Start
