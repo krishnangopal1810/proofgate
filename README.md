@@ -29,9 +29,7 @@
 ## 🎬 See It In Action
 
 <p align="center">
-  <video src="frontend/public/demo/demo.mov" width="800" controls autoplay loop muted>
-    Your browser does not support the video tag.
-  </video>
+  <img src="frontend/public/demo/demo.gif" alt="ProofGate Demo - REJECT to APPROVE flip" width="720"/>
 </p>
 
 <p align="center">
