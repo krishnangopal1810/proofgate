@@ -1,12 +1,12 @@
 # ProofGate Frontend Design Document
 
-> **Goal:** Create a visually stunning, single-page demo UI that showcases the multi-agent judgment system's unique value proposition and wins the hackathon.
+> **Goal:** Create a visually stunning, single-page UI that showcases the multi-agent judgment system's unique value proposition.
 
 ---
 
-## 🏆 CRITICAL: First-Prize Design Decisions
+## 🎯 Key Design Decisions
 
-> These are the **non-negotiable** design choices that differentiate a winning demo from a forgettable one.
+> These are the **non-negotiable** design choices that create a compelling user experience.
 
 ### 1. Full-Screen Verdict Reveal (The Theatrical Moment)
 
