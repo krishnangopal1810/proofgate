@@ -251,8 +251,6 @@ ehthumbs.db
 Thumbs.db
 
 # Binary/Media files (keep small project)
-# Exception: demo files for README
-!frontend/public/demo/**
 *.png
 *.jpg
 *.jpeg
@@ -263,6 +261,10 @@ Thumbs.db
 *.webm
 *.zip
 *.tar.gz
+
+# Exception: demo files for README (must come AFTER media rules)
+!frontend/public/demo/
+!frontend/public/demo/*
 
 # Logs
 npm-debug.log*
