@@ -251,6 +251,8 @@ ehthumbs.db
 Thumbs.db
 
 # Binary/Media files (keep small project)
+# Exception: demo files for README
+!frontend/public/demo/**
 *.png
 *.jpg
 *.jpeg

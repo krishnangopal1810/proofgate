@@ -28,24 +28,17 @@
 
 ## 🎬 See It In Action
 
-```
-User: "Can we recognize ₹12Cr revenue this quarter for Customer K?"
+<p align="center">
+  <video src="frontend/public/demo/demo.mov" width="800" controls autoplay loop muted>
+    Your browser does not support the video tag.
+  </video>
+</p>
 
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  📋 POLICY AGENT          │  ⚠️ RISK AGENT           │  📄 EVIDENCE AGENT   │
-│  Stance: YES_CONDITIONAL  │  Stance: NO              │  Stance: MISSING     │
-│  "Recognition allowed if  │  "30-day termination     │  "No signed customer │
-│   acceptance documented"  │   clause still active"   │   acceptance found"  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                            ⚖️ JUDGE AGENT                                    │
-│  Verdict: INSUFFICIENT_EVIDENCE                                             │
-│  Rule Applied: RULE_2 - Evidence Agent stance is MISSING                    │
-│  Action Required: Attach signed customer acceptance document               │
-│  Citations: [POL-002, CON-007, EVI-001]                                     │
-└─────────────────────────────────────────────────────────────────────────────┘
+<p align="center">
+  <em>Toggle OFF → REJECT (missing acceptance) → Toggle ON → APPROVE (evidence complete)</em>
+</p>
 
-→ User attaches acceptance email → Rerun → Verdict flips to APPROVE ✓
-```
+**The "Aha" Moment:** Same question, same documents—but toggle the acceptance email evidence and watch the verdict flip from **REJECT** to **APPROVE**. That's multi-agent verification in action.
 
 ---
 
