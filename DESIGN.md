@@ -20,7 +20,7 @@
 
 ---
 
-## 💡 Why This Wins
+## 💡 Why Multi-Agent Architecture
 
 ### Track Alignment: Multi-Agent Systems & Workflows
 
@@ -32,15 +32,7 @@
 | **Measurable gains from agents working together** | **Accuracy**: 3 specialized agents catch what 1 generalist misses. **Determinism**: Judge applies explicit rules, not vibes. **Robustness**: Fail-closed = every error becomes `INSUFFICIENT_EVIDENCE`. | Golden tests prove: Scenario A→INSUFFICIENT, Scenario B→APPROVE, Scenario C→REJECT. 100% reproducible. |
 | **Purposeful coordination (debate, handoffs, verification, consensus)** | **Debate**: Policy says YES, Risk says NO, Evidence says MISSING—visible disagreement. **Verification**: Citation whitelist guardrail. **Consensus via Judge**: Deterministic rules resolve conflict, not averaging. | Judge's `rule_applied` field shows exactly which rule fired (e.g., "RULE_2: Evidence Missing"). |
 
-### Judging Criteria Mapping
 
-| Criterion | Score Driver | Proof Point |
-|-----------|--------------|-------------|
-| **1. Clarity of Idea** | One sentence: *"Ask if you can book revenue; ProofGate approves, rejects, or refuses with citations."* | Demo is 90 seconds. A judge can retell it in one sentence. |
-| **2. Track Alignment** | Multi-agent is *essential*, not decorative. Agents have conflicting objectives (permissive vs conservative vs strict). | See table above. This isn't parallel execution—it's adversarial judgment. |
-| **3. Technical Execution** | OpenAI Agents SDK with structured outputs, guardrails, tracing. Citation whitelist = zero hallucinations. | Pydantic schemas, `CitationWhitelistGuardrail`, SHA256 trace hashes. All in code. |
-| **4. Completeness** | Full E2E: upload docs → ask question → retrieve → 3 agents + judge → verdict → attach evidence → verdict flips → replay trace. | Single-screen UI shows entire workflow. `npm run dev` and go. |
-| **5. Impact & Insight** | High-stakes financial gate. The insight: this is *governed decision workflow*, not "RAG Q&A". | Finance teams make these calls daily. Mistakes = audit failures, revenue reversals. |
 
 ---
 
@@ -121,7 +113,7 @@
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-**The magic moment in the demo:** User attaches the acceptance email. Rerun. Verdict flips to `APPROVE`. Every judge sees it.
+**The magic moment in the demo:** User attaches the acceptance email. Rerun. Verdict flips to `APPROVE`.
 
 ---
 
@@ -444,7 +436,7 @@ if input_hash in cache:
 | `Guardrails` | Input/output validators | Citation whitelist is a first-class concept |
 | `Runner.run()` | Async agent execution | Parallel Policy/Risk/Evidence execution |
 | `Tracing` | Built-in observability | Extends naturally to our audit trace |
-| Lightweight | ~2000 LOC, no bloat | Fast iteration, hackathon-friendly |
+| Lightweight | ~2000 LOC, no bloat | Fast iteration, production-ready |
 
 ### Agent Definitions
 
@@ -559,7 +551,7 @@ class ProofGateOrchestrator:
 
 ## 📊 Retrieval Strategy
 
-> **Hackathon Choice:** `SimpleRetriever` — zero ML, zero latency. Graduate to embeddings in production.
+> **MVP Choice:** `SimpleRetriever` — zero ML, zero latency. Graduate to embeddings in production.
 
 | Retriever | When To Use | Latency | Complexity |
 |-----------|-------------|---------|------------|
@@ -568,7 +560,7 @@ class ProofGateOrchestrator:
 | `EmbeddingRetriever` | Large doc packs, arbitrary questions, production | ~150ms | Medium — OpenAI embeddings API |
 
 ```python
-# Hackathon: just return first 2 of each type. Done.
+# MVP: just return first 2 of each type. Done.
 def retrieve(question: str) -> dict:
     return {
         "policy": excerpts["policy"][:2],
@@ -581,7 +573,7 @@ def retrieve(question: str) -> dict:
 
 ## 🎬 The 90-Second Demo Script
 
-> This is exactly what judges will see.
+> This is exactly what users will see.
 
 ### Setup (Pre-demo)
 - Golden doc pack loaded: policy, 2 contracts, evidence files
@@ -589,7 +581,7 @@ def retrieve(question: str) -> dict:
 
 ### Demo Flow
 
-| Time | Action | What Judges See |
+| Time | Action | What Users See |
 |------|--------|-----------------|
 | 0:00 | "Let me ask a question finance teams hate..." | Type: "Can we recognize ₹12Cr revenue this quarter for Customer K?" |
 | 0:10 | Press **Run** | Excerpts appear: 2 policy, 2 contract, 2 evidence |
@@ -732,7 +724,7 @@ proofgate/
 
 ## 🎯 Definition of Done
 
-We win when:
+We're done when:
 
 - [ ] **One command** runs the app (`npm run dev` or `python main.py`)
 - [ ] **One screen** shows the full E2E workflow
@@ -745,7 +737,7 @@ We win when:
 
 ---
 
-## 🏆 Why ProofGate Wins
+## 🎯 Why ProofGate Matters
 
 1. **The Problem is Real**: Finance teams make these decisions daily. Mistakes cause audit failures.
 
@@ -760,6 +752,6 @@ We win when:
 ---
 
 <p align="center">
-  <strong>Built for the hackathon. Ready for production.</strong><br/>
+  <strong>Built for real-world compliance. Ready for production.</strong><br/>
   <em>ProofGate: The AI that says "No" until you prove it.</em>
 </p>
